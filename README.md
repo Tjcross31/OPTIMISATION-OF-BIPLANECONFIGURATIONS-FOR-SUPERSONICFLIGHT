@@ -1,0 +1,2 @@
+# OPTIMISATION-OF-BIPLANECONFIGURATIONS-FOR-SUPERSONICFLIGHT
+Master's Thesis work at Imperial College London
