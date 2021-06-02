@@ -1,0 +1,58 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  7  
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volVectorField;
+    object      U;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 1 -1 0 0 0 0];
+
+#include "include/initialConditions"
+internalField   uniform $initialFlowVelocity;//
+
+boundaryField
+{
+   inlet
+    {
+    	//type		fixedValue;
+    	//value    	uniform $flowVelocity;
+	type            uniformFixedValue;
+    	uniformValue    $pullTable;
+    }
+
+   outlet
+    {
+        type            zeroGradient;
+    }
+
+   upperairfoil
+    {
+        type            slip;
+    }
+
+   lowerairfoil
+    {
+        type            slip;
+    }
+
+   front
+    {
+        type            empty;
+    }
+
+   back
+    {
+        type            empty;
+    }
+}
+
+// ************************************************************************* //

@@ -1,0 +1,71 @@
+// initial reference conditions & atmospheric properties
+pressure 	1;
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// Inital conditions/degree of freedom values
+Umagref		1;  //best expressed in Mach - this can be post processed
+AoA1		0; //degrees
+Umag1		1.2;  //best expressed in Mach
+
+// initial flow velocity components
+Ux  		#calc "$Umag1 * cos(degToRad($AoA1))";
+Uy  		#calc "$Umag1 * sin(degToRad($AoA1))";
+Uz  		#calc "0";
+initialFlowVelocity 	($Ux $Uy $Uz);
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// calculate the shifted lift and drag directions
+
+// lift is a (-sin cos 0)
+lx  		#calc "-sin(degToRad($AoA1))";
+ly  		#calc "cos(degToRad($AoA1))";
+lz  		#calc "0";
+liftVect	($lx $ly $lz);
+
+// drag is a (cos sin 0)
+dx  		#calc "cos(degToRad($AoA1))";
+dy  		#calc "sin(degToRad($AoA1))";
+dz 		#calc "0";
+dragVect	($dx $dy $dz);
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+//legacy code - useful if things break 
+
+// flow velocity components
+//Ux  		#calc "$Umag * cos(degToRad($AoA))";
+//Uy  		#calc "$Umag * sin(degToRad($AoA))";
+//Uz  		#calc "0";
+//flowVelocity 	($Ux $Uy $Uz);
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// DoF test ranges
+//Umag		table
+//(
+//(0 (1.7))
+//(25 (3))
+//);		
+
+pullTable	table
+(
+	 	(  0 (1.2 0 0))
+	 	( 25 (1.2 0 0))
+	 	( 35 (1.3 0 0))
+	 	( 60 (1.3 0 0))
+	 	( 70 (1.4 0 0))
+	 	( 95 (1.4 0 0))
+	 	(105 (1.5 0 0))
+	 	(130 (1.5 0 0))
+	 	(140 (1.6 0 0))
+	 	(165 (1.6 0 0))
+	 	(175 (1.7 0 0))
+	 	(200 (1.7 0 0))
+	 	(210 (1.8 0 0))
+	 	(235 (1.8 0 0))
+	 	(245 (1.9 0 0))
+	 	(270 (1.9 0 0))
+	 	(280 (  2 0 0))
+	 	(305 (  2 0 0))
+);

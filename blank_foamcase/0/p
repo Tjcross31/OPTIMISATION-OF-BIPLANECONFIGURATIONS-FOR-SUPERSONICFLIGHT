@@ -1,0 +1,67 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  7  
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      p;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [1 -1 -2 0 0 0 0];
+
+#include "include/initialConditions"
+internalField   uniform $pressure;
+
+boundaryField
+{
+    inlet
+    {
+        type            waveTransmissive;
+        field           p;
+        psi             thermo:psi;
+        gamma           1.4;
+        fieldInf        1; //far-field value
+        lInf            4; //how far away far-field is
+        value           uniform $pressure; 
+    }
+
+    outlet
+    {
+        type            waveTransmissive;
+        field           p;
+        psi             thermo:psi;
+        gamma           1.4;
+        fieldInf        1; //far-field value
+        lInf            4; //how far away far-field is
+    }
+
+
+    upperairfoil
+    {
+        type            zeroGradient;
+    }
+
+    lowerairfoil
+    {
+        type            zeroGradient;
+    }
+
+   front
+    {
+        type            empty;
+    }
+
+   back
+    {
+        type            empty;
+    }
+}
+
+// ************************************************************************* //

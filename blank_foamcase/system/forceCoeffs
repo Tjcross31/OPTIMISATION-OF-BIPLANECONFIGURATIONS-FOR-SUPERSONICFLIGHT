@@ -1,0 +1,33 @@
+forceCoeffs1
+	{
+		#include "./0/include/initialConditions"
+
+		// Mandatory entries
+		type            forceCoeffs;
+		libs            ("libforces.so");
+		
+		writeControl    runTime;
+		writeInterval   1; //now every second
+
+		patches         (upperairfoil && lowerairfoil);
+		
+		// Optional entries
+		//Field names
+		rhoInf         1.4;
+		// Centre of rotation for moment calculations
+		CofR            (0 0 0); //Origin of domain and airfoil
+
+		// Lift direction
+		liftDir         $liftVect;
+		// Drag direction
+		dragDir         $dragVect;
+		// Pitch axis
+		pitchAxis            (0 0 1); //z-axis
+		// Freestream velocity magnitude [m/s]	
+		magUInf         $Umagref;
+		
+		// Reference length [m]
+		lRef            1;
+		// Reference area [m2]
+		Aref            1.00;
+	}

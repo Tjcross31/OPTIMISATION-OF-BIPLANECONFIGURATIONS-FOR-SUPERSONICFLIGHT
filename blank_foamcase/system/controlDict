@@ -1,0 +1,65 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  7  
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+#include "./0/include/initialConditions"
+
+application     rhoCentralFoam;
+
+startFrom       latestTime; //firstTime startTime; //
+
+startTime       0;
+
+stopAt          endTime;
+
+endTime         $endtime;//want to do 2 also
+
+deltaT          0.0005;//0.001 works a treat
+
+writeControl    runTime;
+
+writeInterval   1;
+
+purgeWrite      0;
+
+writeFormat     ascii;
+
+writePrecision  6;
+
+writeCompression off;
+
+timeFormat      general;
+
+timePrecision   6;
+
+runTimeModifiable true;
+
+adjustTimeStep  yes;//was no
+
+maxCo           0.05;
+
+maxDeltaT       0.001;//1e-06;
+
+// ************************************************************************* //
+functions
+{
+	#includeFunc MachNo
+
+//https://cfd.direct/openfoam/user-guide/v6-graphs-monitoring/
+//foamInforesiduals, foamGetresiduals, copy into /system, foamMonitor-lpostProcessing/residuals/0/residuals.dat
+
+	#include "forceCoeffs"
+}
